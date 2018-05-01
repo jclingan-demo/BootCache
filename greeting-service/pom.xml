@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.openshift.booster</groupId>
+        <artifactId>booster-cache-springboot-1525182861151</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>spring-boot-cache-greeting</artifactId>
+
+    <name>Spring Boot - Cache Booster - Greeting Service</name>
+    <description>Spring Boot - Cache Booster - Greeting Service</description>
+
+    <properties>
+        <version.infinispan.starter>2.0.0.Alpha1</version.infinispan.starter>
+        <version.infinispan>9.1.0.Final</version.infinispan>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Needed to force the tests to work in embedded mode -->
+        <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-spring-boot-starter-embedded</artifactId>
+            <version>${version.infinispan.starter}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.infinispan</groupId>
+                    <artifactId>infinispan-spring-boot-starter-embedded</artifactId>
+                    <version>${version.infinispan.starter}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>openshift</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.infinispan</groupId>
+                    <artifactId>infinispan-spring-boot-starter-remote</artifactId>
+                    <version>${version.infinispan.starter}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+</project>
